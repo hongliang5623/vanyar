@@ -1,9 +1,4 @@
 #-*- encoding: utf-8 -*-
-'''
-Created on 2013-1-17
-
-@author: Zoe
-'''
 import urllib2
 import urllib
 import json
@@ -91,8 +86,6 @@ if __name__ == '__main__':
     APP_KEY=u'211160679'
     APP_SECRET=u'63b64d531b98c2dbff2443816f274dd3'
 
-    #print st.get_token('zoe0316@live.cn', 'zzbb02090417', APP_KEY, APP_SECRET)
-    #print st.get_token('cidians@126.com', 'guoxingyu1234', APP_KEY, APP_SECRET)
     #(u'2.008bhtYC06XASO8d4222c0abw5bqbE', 1382900402, u'2347936741')
     clients=st.reg_apiclients([{'app_key':211160679 , 'token': "2.008bhtYC06XASO8d4222c0abw5bqbE", 'expires_in':1382900402 }])
     #print clients
@@ -110,7 +103,7 @@ if __name__ == '__main__':
     '''    
     
     r=clients[0].statuses.timeline_batch.get(uids=2187711961)
-    print i, len(r.get('statuses'))
+    print len(r.get('statuses'))
     
         
     
