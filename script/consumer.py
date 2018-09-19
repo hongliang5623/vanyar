@@ -34,3 +34,7 @@ c2 = threading.Thread(target=consumer, args=("Wang",))
 p.start()
 c1.start()
 c2.start()
+
+p.join()
+c1.join()
+c2.join()
