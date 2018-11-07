@@ -10,15 +10,14 @@ class ListNode:
 def nonrecurse(head):  # 循环的方法反转链表
     if head is None or head.next is None:
         return head
-    pre = None
+    pre, new_head = None, None
     cur = head
-    new_head = head
     while cur:
         new_head = cur
-        tmp = cur.next
+        cur_next = cur.next
         cur.next = pre
         pre = cur
-        cur = tmp
+        cur = cur_next
     return new_head
 
 
@@ -29,8 +28,8 @@ def recurse(head, newhead):  # 递归，head为原链表的头结点，newhead�
         newhead = head
     else:
         newhead = recurse(head.next, newhead)
-        head.next.next = head
-        head.next = None
+        head.next.next = head # 当前节点的next节点指向自己
+        head.next = None # 当前节点原来的指向制空
     return newhead
 
 
@@ -53,11 +52,13 @@ def print_link(p, flag=''):
 
 
 if __name__ == '__main__':
-    source_head = init_link(20)
-    print_link(source_head, 'source')
+    source_head1 = init_link(20)
+    print_link(source_head1, 'source')
 
-    p1 = nonrecurse(source_head)
-    print_link(p1, 'non')
+    p1 = nonrecurse(source_head1)
+    print_link(p1, 'non---->')
 
-    p2 = recurse(init_link(20), None)
-    print_link(p2, 'recurse')
+    source_head2 = init_link(20)
+    print_link(source_head2, 'source2')
+    p2 = recurse(source_head2, None)
+    print_link(p2, 'recurse---->')

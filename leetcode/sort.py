@@ -23,6 +23,7 @@ def merge(a, b):
 
 
 def merge_sort(lists):
+    # 合并排序
     if len(lists) <= 1:
         return lists
     middle = len(lists)/2
