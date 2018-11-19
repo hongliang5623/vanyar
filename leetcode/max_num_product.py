@@ -83,5 +83,5 @@ def reverseKGroup(head, k):
 
 
 if __name__ == '__main__':
-    # print max_product(nums=nums)
-    print lengthOfLongestSubstring('abcaaadfb')
+    print max_product(nums=nums)
+    #print lengthOfLongestSubstring('abcaaadfb')
