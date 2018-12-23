@@ -49,7 +49,53 @@ def rotateRight(head, k):
     return head
 
 
-result = rotateRight(head1, 2)
+def rotateRight2(head, k):
+    """
+    :type head: ListNode
+    :type k: int
+    :rtype: ListNode
+    """
+
+    if not head:
+        return None
+
+    if not head.next:
+        return head
+
+    pointer = head
+    count = 1
+    while pointer.next:
+        pointer = pointer.next
+        count+=1
+
+    rotateTimes = k%count
+
+    print("count is ", count)
+    print('rotate is', rotateTimes)
+    if not k or not rotateTimes:
+        return head
+
+
+    slow = fast = head
+
+    for i in range(rotateTimes-1):
+        fast = fast.next
+
+    tmp = ListNode(0)
+
+    while fast.next:
+        tmp = slow
+        slow = slow.next
+        fast = fast.next
+
+
+    print 'tmp before slow:%s, fast:%s, slow:%s' % (tmp.val, fast.val, slow.val)
+    tmp.next = None  # 断开旋转点之前的指针指向，保证slow为头部
+    fast.next = head  # 末尾指向头部
+    return slow
+
+
+result = rotateRight2(head1, 2)
 print 'result---------->>>>'
 while result:
     print result.val
