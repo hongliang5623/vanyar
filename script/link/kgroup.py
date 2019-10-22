@@ -10,21 +10,31 @@ class Solution:
     # @param head, a ListNode
     # @param k, an integer
     # @return a ListNode
-    def reverse(self, start, end):
+    def _reverse(self, start, end):
 
-        newhead = ListNode(0)
-        newhead.next = start
-        oldhead = newhead.next
+        pre_head = ListNode(0)
+        pre_head.next = start
+        current_head = pre_head.next
 
         print 'begin----------->, start:%s' % start.val
-        while newhead.next != end:
-            print 'oldhead.next:%s' % oldhead.next.val
-            tmp = oldhead.next
-            oldhead.next = tmp.next
-            tmp.next = newhead.next
-            newhead.next = tmp
+        while pre_head.next != end:
+            print 'current head.next:%s' % current_head.next.val
+            _next = current_head.next # 记录下一个节点 
+            current_head.next = _next.next
+            _next.next = pre_head.next
+            pre_head.next = _next # 走到下一个节点
         print 'ok....'
-        return [end, oldhead]
+        return [end, current_head]
+
+    def reverse(self, start, end):
+      pre, cur = None, None
+      while start.next != end:
+        next = start.next
+        start.next = pre
+        pre = start
+        start = next
+      return [end, pre]
+
 
     def reverseKGroup(self, head, k):
         if head == None:
@@ -71,6 +81,12 @@ if __name__ == '__main__':
     node7.next = node8
     node8.next = node9
     node9.next = node10
+    '''
+    source = node1
+    while source.next:
+      print source.val
+      source = source.next
+    '''
     r = Solution().reverseKGroup(node1, 4)
     while r:
         print r.val
