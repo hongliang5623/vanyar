@@ -5,6 +5,14 @@ class ListNode:
         self.val = x
         self.next = None
 
+def print_link(source):
+    if not source:
+        return
+    while source.next:
+        print source.val
+        source = source.next
+    print '<<<<<<<<<<<<<------------------>>>>>>>>>>>>>>>>>>'
+
 
 class Solution:
     # @param head, a ListNode
@@ -14,17 +22,20 @@ class Solution:
 
         pre_head = ListNode(0)
         pre_head.next = start
-        current_head = pre_head.next
+        current = pre_head.next # 值不变，用来存储next
 
         print 'begin----------->, start:%s' % start.val
         while pre_head.next != end:
-            print 'current head.next:%s' % current_head.next.val
-            _next = current_head.next # 记录下一个节点 
-            current_head.next = _next.next
+            print 'current:%s' % current.val
+            _next = current.next # 保存下一个节点
+            current.next = _next.next
             _next.next = pre_head.next
             pre_head.next = _next # 走到下一个节点
-        print 'ok....'
-        return [end, current_head]
+        print 'ok----------->, start:%s' % start.val
+        _end, _current = end, current
+        print_link(_end)
+        print_link(_current)
+        return [end, current]
 
     def reverse(self, start, end):
       pre, cur = None, None
@@ -50,8 +61,10 @@ class Solution:
                 end = end.next
                 if end.next == None:
                     return nhead.next
-            res=self.reverse(start.next, end.next)
+            print 'xxxxx:', start.next.val, end.next.val, nhead.next.val
+            res=self._reverse(start.next, end.next)
             start.next = res[0]
+            print id(start), id(nhead)
             start=res[1]
 
         return nhead.next
@@ -81,12 +94,9 @@ if __name__ == '__main__':
     node7.next = node8
     node8.next = node9
     node9.next = node10
-    '''
     source = node1
-    while source.next:
-      print source.val
-      source = source.next
-    '''
+    print_link(source)
+    print '--------->>begin........'
     r = Solution().reverseKGroup(node1, 4)
     while r:
         print r.val
