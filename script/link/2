@@ -1,0 +1,60 @@
+# -*- coding: utf-8 -*-
+
+class ListNode:
+    def __init__(self, x):
+        self.val = x
+        self.next = None
+
+
+def print_link(source, info=''):
+    if not source:
+        return
+    while source.next is not none:
+        print source.val
+        source = source.next
+    if info:
+        print '---------------->>>:::', info
+
+
+def get_link_list():
+    node1 = ListNode(1)
+    cur = node1
+    for item in [11, 12, 2, 3, 4, 5, 6, 7, 8, 9, 10]:
+        dummy = ListNode(item)
+        cur.next = dummy
+        cur = dummy
+    source = node1
+    # node1.next = node2
+    '''
+    while source.next:
+        print source.val
+        source = source.next
+    while node1.next:
+        print node1.val
+        node1 = node1.next
+    '''
+    return node1
+
+
+def reverse_link(source):
+    if not source or not source.next:
+        return source
+
+    new_head = ListNode(0)
+    new_head.next = source
+    pre = None
+
+    while new_head.next:
+        dummy = new_head.next
+        new_head.next = pre
+        pre = new_head
+        new_head = dummy
+
+    return pre
+
+
+if __name__ == '__main__':
+    source = get_link_list()
+    print_link(source, 'init....')
+    after_reversed = reverse_link(source)
+    print_link(after_reversed, 'reversed')

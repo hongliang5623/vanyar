@@ -8,7 +8,7 @@ class ListNode:
 def print_link(source):
     if not source:
         return
-    while source.next:
+    while source is not None:
         print source.val
         source = source.next
     print '<<<<<<<<<<<<<------------------>>>>>>>>>>>>>>>>>>'
@@ -20,22 +20,21 @@ class Solution:
     # @return a ListNode
     def _reverse(self, start, end):
 
-        pre_head = ListNode(0)
-        pre_head.next = start
-        current = pre_head.next # 值不变，用来存储next
+        new_head = ListNode(0)
+        new_head.next = start    # 通过改变new_head.next直到end成为new_head.next
+        new_end = new_head.next  # 通过改变new_end.next保留本此反转尾部
 
-        print 'begin----------->, start:%s' % start.val
-        while pre_head.next != end:
-            print 'current:%s' % current.val
-            _next = current.next # 保存下一个节点
-            current.next = _next.next
-            _next.next = pre_head.next
-            pre_head.next = _next # 走到下一个节点
-        print 'ok----------->, start:%s' % start.val
-        _end, _current = end, current
-        print_link(_end)
-        print_link(_current)
-        return [end, current]
+        while new_head.next != end:
+            #:print 'new end: %s new end.next:%s ' % (new_end.val, new_end.next.val)
+            cur = new_end.next  # 保存下一个节点
+            new_end.next = cur.next
+            cur.next = new_head.next
+            new_head.next = cur  # 走到下一个节点
+
+        new_head = end
+        #print_link(new_head)
+        #print_link(new_end)
+        return new_head, new_end
 
     def reverse(self, start, end):
       pre, cur = None, None
@@ -61,11 +60,10 @@ class Solution:
                 end = end.next
                 if end.next == None:
                     return nhead.next
-            print 'xxxxx:', start.next.val, end.next.val, nhead.next.val
-            res=self._reverse(start.next, end.next)
-            start.next = res[0]
-            print id(start), id(nhead)
-            start=res[1]
+            print 'recurse:start.next:%s, end.next:%s, nhead.next:%s' % (start.next.val, end.next.val, nhead.next.val)
+            head_new, left_nodes =self._reverse(start.next, end.next)
+            start.next = head_new  #这里仅修改一次nhead.next, start和nhead就不再指向同一内存了
+            start=left_nodes
 
         return nhead.next
 
@@ -93,7 +91,7 @@ if __name__ == '__main__':
     node6.next = node7
     node7.next = node8
     node8.next = node9
-    node9.next = node10
+    #node9.next = node10
     source = node1
     print_link(source)
     print '--------->>begin........'
