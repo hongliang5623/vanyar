@@ -20,30 +20,32 @@ def max_product(nums):
 def lengthOfLongestSubstring(source):
     start = 0
     maxlen = 0
-    dict = OrderedDict({})
+    # str_dict = OrderedDict({})
+    str_dict = {}
     source_length = len(source)
     max_strs = []
 
     for i in range(source_length):
-        dict[source[i]] = -1
+        str_dict[source[i]] = -1
 
     for i in range(source_length):
         str_now = source[i]
 
-        if dict[str_now] != -1:
-            while start <= dict[str_now]:
-                dict[source[start]] = -1
+        if str_dict[str_now] != -1:
+            while start <= str_dict[str_now]:
+                str_dict[source[start]] = -1
                 start += 1
 
         if i + 1 - start > maxlen:
             maxlen = i + 1 - start
+
         if i + 1 - start >= maxlen:
             max_str = source[start:start + maxlen]
             max_strs.append(max_str)
             max_strs = filter(lambda s: len(s) >= maxlen, max_strs)
 
-        dict[str_now] = i
-        print str_now, max_strs
+        str_dict[str_now] = i
+        print 'item now:%s,\t max str:%s,\t max len:%s' % (str_now, max_strs, maxlen)
     return maxlen
 
 
@@ -83,5 +85,5 @@ def reverseKGroup(head, k):
 
 
 if __name__ == '__main__':
-    print max_product(nums=nums)
-    #print lengthOfLongestSubstring('abcaaadfb')
+    #print max_product(nums=nums)
+    print lengthOfLongestSubstring('abcaaadfb')
