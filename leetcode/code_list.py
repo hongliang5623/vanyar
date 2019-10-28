@@ -107,8 +107,39 @@ class Solution(object):
 
         return s[index: index + min_len] if min_len else ''
 
+    def uniquePaths(self, m, n):
+
+        if m == 1 and n == 1:
+            grid_list = [[1]]
+
+        elif m == 1 and n > 1:
+            grid_list = [[1 for i in range(n)]]
+
+        elif m > 1 and n == 1:
+            grid_list = [[1] for i in range(m)]
+
+        else:
+            grid_list = [[0 for i in range(n)] for i in range(m)]
+            print '1', grid_list
+
+            for i in range(0, n):
+                grid_list[0][i] = 1
+
+            print '2', grid_list
+            for i in range(0, m):
+                grid_list[i][0] = 1
+
+            print '3', grid_list
+            for i in range(1, m):
+                for j in range(1, n):
+                    grid_list[i][j] = grid_list[i-1][j] + grid_list[i][j-1]
+            print '4', grid_list
+
+        return grid_list[m-1][n-1]
+
 
 if __name__ == '__main__':
    # print '----------->>>'
     #print Solution().permute(['1', '2', '3'])
-    print Solution().minWindow('ADOBECODEBANC', 'ABC')
+   # print Solution().minWindow('ADOBECODEBANC', 'ABC')
+   print Solution().uniquePaths(3, 2)
