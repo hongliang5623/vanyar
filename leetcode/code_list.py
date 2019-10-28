@@ -58,7 +58,57 @@ class Solution(object):
         dfs(nums, [])
         return self.res
 
+    def minWindow(self, s, t):
+        """
+        :type s: str
+        :type t: str
+        :rtype: str
+        """
+        if len(s) < len(t):
+            return ''
+
+        target_dict = {}
+        for item in t:
+            target_dict[item] = target_dict.get(item, 0) + 1
+        min_len = 10000000000000
+        slow = 0
+        match_count = 0
+        index = 0
+
+        for fast in xrange(len(s)):
+            current_item = s[fast]
+
+            if current_item not in target_dict:
+                continue
+
+            item_need_count = target_dict[current_item]
+            target_dict[current_item] = item_need_count - 1
+
+            if target_dict[current_item] == 0:
+                match_count = match_count + 1 # 本来需要，现在不需要了
+
+            while match_count == len(target_dict):
+                # find a valid substring
+                if (fast - slow + 1) < min_len:
+                    min_len = fast - slow + 1
+                    index = slow # 记录上一个valid 开始的位置
+
+                left_item = s[slow] # 从valid中去掉这个item
+                slow = slow + 1 # 慢指针开始前移
+
+                if left_item not in target_dict:
+                    continue
+
+                left_need_count = target_dict.get(left_item)
+                target_dict[left_item] = left_need_count + 1
+
+                if target_dict[left_item] > 0:
+                    match_count = match_count - 1  # 本来不需要，现在需要了
+
+        return s[index: index + min_len] if min_len else ''
+
 
 if __name__ == '__main__':
-    print 'gggggg----------->>>'
-    print Solution().permute(['1', '2', '3'])
+   # print '----------->>>'
+    #print Solution().permute(['1', '2', '3'])
+    print Solution().minWindow('ADOBECODEBANC', 'ABC')
